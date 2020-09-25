@@ -1,0 +1,61 @@
+{% extends 'base_staff.html' %}
+
+{% block content %}
+
+<div>
+<h3 style="color: black;">Staff order update</h3><br />
+
+
+{% for order in orders %}
+
+
+{% if order.status == 0 %}
+Order ID: {{ order.orderID }}  </br> 
+Status:<strong> Unavailable</strong></br>
+
+<form method="POST">
+    <label for "update status">Update Status:
+        <select name="update" class="required">
+            <option value="None">Choose an option</option>
+            <option value="0">Unavailable</option>
+            <option value="1">Available</option>
+    </label> 
+    <input type="submit" name="confirm" value="Confirm"> </br>
+    <input type="hidden" name="key" value="{{ order.orderID }}">
+</form>
+
+</br>
+</br>
+
+{% endif %}
+
+{% if order.status == 1 %}
+Order ID: {{ order.orderID }} </br> 
+Status: Available </br>
+
+<form method="POST">
+    <label for "update status">Update Status:
+        <select name="update" class="required">
+            <option value="None">Choose an option</option>
+            <option value="0">Unavailable</option>
+            <option value="1">Available</option>
+    </label> 
+    <input type="submit" name="confirm" value="Confirm"/> </br>
+
+    <input type="hidden" name="key" value="{{ order.orderID }}">
+</form>
+<form method="POST">
+    <input type="submit" name="collected" value="Collected">
+    <input type="hidden" name="key" value="{{ order.orderID }}">
+</form>
+</br>
+</br>
+{% endif %}
+
+{% endfor %}
+<form method="POST">
+    <input type="submit" name="archive_orders" value="View Archived Orders">
+</form>
+</div>
+        
+{% endblock %}

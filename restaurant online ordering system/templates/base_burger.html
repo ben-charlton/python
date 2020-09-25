@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="jumbotron">
+
+<h1 style="color: black;">Choose base burger or wrap</h1><br />
+
+
+<form method="POST">
+
+	{% set sesame_bread = inventory.get_ingredient('sesame seed') %}
+	{% set white_wrap = inventory.get_ingredient('white wrap') %}
+	{% set chicken = inventory.get_ingredient('chicken') %}
+	{% set beef = inventory.get_ingredient('beef') %}
+	{% set veggie = inventory.get_ingredient('veggie') %}
+
+<!--~~~~~~~~~~ BASE BURGERS ~~~~~~~~~~~~~~-->	
+
+	{% if sesame_bread.stock > 2 %}
+		{% if chicken.stock > 0 %}
+    		Chicken Burger: $15 <input type="checkbox" name="chickenBurger" value="Chicken Burger" style="margin-right:20px" />
+    	{% else %}
+       		<p style="color: red;">Sorry! Chicken Burger is unavailable due to insufficient stock</p>
+    	{% endif %}
+		{% if beef.stock > 0 %}
+	    	Beef Burger: $15 <input type="checkbox" name="beefBurger" value="Beef Burger" style="margin-right:20px" />
+    	{% else %}
+			<p style="color: red;">Sorry! Beef Burger is unavailable due to insufficient stock</p>
+		{% endif %}
+		{% if veggie.stock > 0 %}
+	    	Veggie Burger: $15 <input type="checkbox" name="veggieBurger" value="Veggie Burger" /></br>
+    	{% else %}
+			<p style="color: red;">Sorry! Veggie Burger is unavailable due to insufficient stock</p>
+		{% endif %}
+	{% else %}
+		<p style="color: red;">Sorry! Base Burger's are currently unavailable due to insufficient bread stock</p>
+    {% endif %}
+    <br />
+
+<!--~~~~~~~~~~ BASE WRAPS ~~~~~~~~~~~~~~-->
+	
+	{% if white_wrap.stock > 2 %}
+		{% if chicken.stock > 0 %}
+	    Chicken Wrap: $10 <input type="checkbox" name="chickenWrap" value="Chicken Wrap" style="margin-right:31px" />
+		{% else %}
+			<p style="color: red;">Sorry! Chicken Wrap is unavailable due to insufficient stock</p>
+		{% endif %}
+		{% if beef.stock > 0 %}
+	    	Beef Wrap: $10 <input type="checkbox" name="beefWrap" value="Beef Burger" style="margin-right:30px" />
+		{% else %}
+			<p style="color: red;">Sorry! Beef Burger is unavailable due to insufficient stock</p>
+		{% endif %}
+		{% if veggie.stock > 0 %}	
+	    	Veggie Wrap: $10 <input type="checkbox" name="veggieWrap" value="Veggie Burger" /></br>
+    	{% else %}
+			<p style="color: red;">Sorry! Veggie Wrap is unavailable due to insufficient stock</p>
+    	{% endif %}
+	{% else %}
+		<p style="color: red;">Sorry! Base Wrap's are unavailable due to insufficient stock</p>
+	{% endif %}
+	<br />
+    <button type="submit" class="w3-btn">Confirm</button><br /><br />
+    <input type="button" value="Back" onclick="window.history.back()" />
+</form>
+
+</body>
+</div>
+{% endblock %}

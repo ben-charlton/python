@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+
+<div id="container">
+
+<div class="jumbotron">
+
+<h1 class="display-4"> Please select an option</h1> 
+<p class="lead">to add to your order</p>
+<hr class="my-4">
+<form method="POST">
+
+	<input type="submit" name="order" value="Create Custom Wrap" class="btn btn-light"></input> </br>
+	<input type="submit" name="order" value="Create Custom Burger" class="btn btn-light"></input> </br>
+    <input type="submit" name="order" value="Choose Base Burger" class="btn btn-light"></input> </br>
+    <input type="submit" name="order" value="Sides" class="btn btn-light"></input> </br> 
+    <input type="submit" name="order" value="Drinks" class="btn btn-light"></input> </br> 
+    </br>
+
+{% if cost %}
+	Total Cost: $ {{cost}} <br /><br />
+{% endif %} 
+    
+    <input type="submit" name="order" value="Proceed to Checkout" class="btn btn-success btn-lg"></input>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+{% endblock %}
+
+
+

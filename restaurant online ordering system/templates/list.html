@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<div>
+<head>
+    <title>Restaurant Order System!</title>
+</head>
+
+</div>
+
+<body>
+<a class="nav" href="{{ url_for('index') }}">Back to Homepage</a> <br/>
+
+
+{% for order in orders %}
+	{{orders[order]}}<br>
+{% endfor %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+
+<h1 style="color: black;">Create custom wrap</h1>
+
+<form method="POST">
+    </br>
+    <label for "Choose Bread">Select Wrap Type:
+        <select name="bread" class="required">
+            <option value="None">Choose an option</option>
+            {% for bread in inventory.bread %}
+                {% if bread == 'wholegrain wrap' or bread == 'glutenfree wrap' or bread == 'white wrap' %}
+                    {% set bread_instance = inventory.get_ingredient(bread) %}
+                    {% if bread_instance.stock >= 4 %}
+                        <option value="{{ bread }}">{{ bread }}: Cost: ${{ bread_instance.cost }} </option>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </select>
+    </label>
+    <br>
+<!-- ERROR MESSAGE FOR INSUFFICIENT WRAP STOCK -->
+    {% for bread in inventory.bread %} 
+        {% if bread == 'wholegrain wrap' or bread == 'glutenfree wrap' or bread == 'white wrap' %}
+            {% set bread_instance = inventory.get_ingredient(bread) %}
+            {% if bread_instance.stock < 4 %}
+                <p style="color: red;">Sorry! {{ bread }} is unavailable due to insufficient stock</p>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->    
+    <br />
+    <label for "Choose Pattie">Select main filling:
+        <select name="pattie" class="required">
+            <option value="None">Choose an option</option>
+            <option value="0">None</option>
+            {% for pattie in inventory.patties %}
+                {% set pattie_instance = inventory.get_ingredient(pattie) %}
+                    {% if pattie_instance.stock >= 2 %}
+                        <option value="{{ pattie }}">{{ pattie }}: Cost: ${{ pattie_instance.cost }}</option>    
+                    {% endif %}  
+            {% endfor %}
+            <br>
+        </select>
+    </label>
+    <br />
+
+<!-- ERROR MESSAGE FOR INSUFFICIENT PATTIE STOCK -->
+    {% for pattie in inventory.patties %} 
+        {% set pattie_instance = inventory.get_ingredient(pattie) %}
+        {% if pattie_instance.stock < 2 %}
+            <p style="color: red;">Sorry! {{ pattie }} pattie is unavailable due to insufficient stock</p>
+        {% endif %}
+    {% endfor %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <p> 
+    Other: 
+    <br />
+    {% for filling in inventory.fillings %}
+        {% set filling_instance = inventory.get_ingredient(filling) %}
+        {% if filling_instance.stock > 0 %}
+            {{ filling }}
+            <input type="checkbox" name="fillings" value="{{ filling }}" /> 
+            ${{ filling_instance.cost }}
+            </br>
+        {% endif %}
+    {% endfor %}
+    </p>
+    {% if select_error %}
+        <span style="color:#ff0000;">Please select all fields</span> </br>
+    {% endif %}
+    <button type="submit" class="w3-btn" style="margin-top:20px;">Confirm</button><br /><br />
+    <input type="button" value="Back" onclick="window.history.back()" />
+</form>
+
+
+</div>
+{% endblock %}
+
+
+

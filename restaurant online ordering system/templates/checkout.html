@@ -1,0 +1,15 @@
+{% extends 'base_staff.html' %}
+
+{% block content %}
+
+
+<h3 style="colour: red"> Thankyou, your order is being processed:</h3><br />
+	
+<h4> Order ID Number: {{order.orderID}}</h4>
+
+{{order}}
+<br><strong>Total Cost: ${{cost}}</strong><br /><br />
+
+<a href="{{ url_for('customer_check_order') }}"><button class="btn btn-primary btn-sm" style="cursor: pointer;" type="button">Check order status</button></a><br>
+
+{% endblock %}

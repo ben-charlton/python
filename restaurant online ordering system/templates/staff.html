@@ -1,0 +1,8 @@
+{% extends 'base_staff.html' %}
+
+{% block content %}
+
+<a class="nav" href="{{ url_for('staff_view_orders') }}"><button class="btn btn-primary" style="cursor: pointer">Staff: view orders</button></a> </br>
+<a class="nav" href="{{ url_for('staff_update_inventory') }}"><button class="btn btn-primary" style="cursor: pointer">Staff: update inventory</button></a> </br>
+
+{% endblock %}

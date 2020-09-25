@@ -1,0 +1,54 @@
+{% extends 'base_staff.html' %}
+
+{% block content %}
+
+<h3 style="color: black;">Staff inventory update</h3><br />
+
+
+<form method="POST">
+    <label>Select Ingredient:
+        {% if not ingredient %}
+            <select name='Ingredient' class="required">
+            <option value={{ingredient}}>Choose an option</option>
+            {% for item in inventory.bread %}
+                <option value="{{ item }}">{{ item }}</option>      
+            {% endfor %}
+            {% for item in inventory.fillings %}
+                <option value="{{ item }}">{{ item }}</option>      
+            {% endfor %}
+            {% for item in inventory.patties %}
+                <option value="{{ item }}">{{ item }}</option>         
+            {% endfor %}
+            {% for item in inventory.sides %}
+                <option value="{{ item }}">{{ item }}</option>     
+            {% endfor %}
+            {% for item in inventory.drinks %}
+                <option value="{{ item }}">{{ item }}</option>      
+            {% endfor %}
+             </select>
+        {% else %}
+            {{ingredient}} <input type='hidden' value = "{{ingredient}}" name = 'Ingredient'> 
+        {% endif %}
+        {{error}}
+    </label>
+    {% if ingredient %}
+        <br>
+        Old Stock Level: {{stock}} units
+        <br>
+        Increase/Decrease stock by: 
+        {% if not new_stock %}
+            <input type="text" placeholder="+/- units" name="amount"></br>
+        {% else %}
+            {{amount}} <br>
+            New Stock Level: {{new_stock}} <br>
+        {% endif %}
+    {% endif %}
+
+    <input type="submit" value='{{button}}' name='button'>
+</form>
+
+</div>
+
+{% endblock %}
+
+

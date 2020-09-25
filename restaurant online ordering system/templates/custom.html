@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+<div>
+<body>
+
+<div class="jumbotron">
+
+<h1 style="color: black;">Create custom burger</h1>
+<br />
+
+<form method="POST">
+    <label for "Choose Bread">Select Bread Type:
+        <select name="bread" class="required">
+            <option value="None">Choose an option</option>
+            {% for bread in inventory.bread %}
+                {% if bread == 'muffin' or bread == 'sesame seed' or bread == 'wholegrain' or bread == 'glutenfree' %}
+                    {% set bread_instance = inventory.get_ingredient(bread) %}
+                    {% if bread_instance.stock >= 4 %}
+                        <option value="{{ bread }}">{{ bread }}: Cost (single): ${{ bread_instance.cost }}</option>  
+                    {% endif %} 
+                {% endif %} 
+            {% endfor %}
+        </select>
+    </label>
+    <div>
+    <!-- ERROR MESSAGE FOR INSUFFICIENT BREAD STOCK -->
+    {% for bread in inventory.bread %} 
+        {% if bread == 'muffin' or bread == 'sesame seed' or bread == wholegrain or bread == 'glutenfree' %}
+            {% set bread_instance = inventory.get_ingredient(bread) %}
+            {% if bread_instance.stock < 4 %}
+                <p style="color: red;">Sorry! {{ bread }} is unavailable due to insufficient stock</p>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    </div>
+    <label for "Choose Buns">Select Size of Burger:
+        <select name="numBuns" class="required">
+            <option value="None">Choose an option</option>
+            <option value="2">Single</option>
+            <option value="3">Double</option>
+            <option value="4">Triple</option>
+        </select>
+    </label>
+    </br>
+    <label for "Choose Pattie">Select Pattie Type:
+        <select name="pattie" class="required">
+            <option value="None">Choose an option</option>
+            <option value="0">None</option>
+            {% for pattie in inventory.patties %}
+                {% set pattie_instance = inventory.get_ingredient(pattie) %}
+                {% if pattie_instance.stock >= 4 %}
+                 <option value="{{ pattie }}">{{ pattie }}: Cost (single): ${{ pattie_instance.cost }}</option> 
+                 {% endif %}     
+            {% endfor %}
+        </select>
+    </label>
+    <div>
+    <!-- ERROR MESSAGE FOR INSUFFICIENT PATTIE STOCK -->
+    {% for pattie in inventory.patties %} 
+        {% set pattie_instance = inventory.get_ingredient(pattie) %}
+        {% if pattie_instance.stock < 4 %}
+            <p style="color: red;">Sorry! {{ pattie }} pattie is unavailable due to insufficient stock</p>
+        {% endif %}
+    {% endfor %}
+     <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    </div>
+    <label for "Choose Patties">Select Number of Patties:
+        <select name="numPatties" class="required">
+            <option value="None">Choose an option</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </label>
+    </br>
+    <div> Other ingredients: </div>
+    {% for filling in inventory.fillings %}
+        {% set filling_instance = inventory.get_ingredient(filling) %}
+        {% if filling_instance.stock > 1 %}
+            {{ filling }}
+            <input type="checkbox" name="fillings" value="{{ filling }}" />
+            Cost: ${{ filling_instance.cost }}
+            </br>
+        {% endif %}  
+    {% endfor %}
+
+    {% if select_error %}
+        <span style="color:#ff0000;">Please select all fields</span> </br>
+    {% endif %}
+    {% if check_error %}
+        <span style="color:#ff0000;">Please don't select a number of patties if no pattie type selected</span> </br>
+    {% endif %}
+    <button type="submit" style="margin-top:20px;">Confirm</button><br /><br />
+
+    <input type="button" value="Back" onclick="window.history.back()" />
+
+</form>
+
+</body>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base_staff.html' %}
+
+{% block content %}
+
+
+{% if not status %}
+	<form method="POST">
+		Order ID <input name = 'order_id'>
+		<input type="submit" value='Submit'><font color="red"> {{error}}</font>
+	</form>
+{% else %}
+	<h1> Order {{order_id}} is {{status}} </h1>
+{% endif %}
+
+
+
+</body>
+
+</html>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- <link rel="stylesheet" type="text/css" href="static/styles.css" /> -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Restaurant Order System!</title>
+</head>
+
+<body>
+
+
+<!-- Main Content -->
+{% block content %}
+
+{% endblock %}
+
+<!-- Tab Menu -->
+<a class="nav" href="{{ url_for('cancel') }}" onclick="return confirm('Are you sure you wish to cancel your order?')"> Cancel Order</a>
+<br>
+
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+<h1> Choose your sides </h1><br />
+
+<form method="POST">
+    {% for side_name, side in inventory.sides.items() %}
+        {% if side.stock > 10 %}
+            <div style="width: 80px; display:inline-block; text-align: right;">{{ side_name }}</div>
+            <input type="checkbox" name="side" value="{{ side_name }}" />
+            <select name="size" required>
+                <option value="None">Size</option>
+                {% for s, sval in side.size.items() %}
+                    <option value={{ s }}>{{ s }}: Cost: ${{ (sval*side.cost)|int }}</option>
+                {% endfor %}
+                <br />
+            </select> Quantity:
+            <input type="number" name="quantity" value='0' min="0" max="10" > <br><br />
+        {% endif %}
+    {% endfor %}
+
+    {% for side_name, side in inventory.sides.items() %}
+        {% if side.stock < 10 %}
+            <p style="color: red;">Sorry! {{ side_name }} is unavailable due to insufficient stock</p>
+        {% endif %}
+    {% endfor %}
+
+    {% if select_error %}
+        <span style="color:#ff0000;">{{select_error}}</span> </br>
+    {% endif %}
+
+    {% if checkbox_error %}
+        <span style="color:#ff0000;">Please select all required fields when selecting a side</span> </br>
+    {% endif %}
+    <br />
+    <input type="submit" name="confirm" value="Confirm"></input><br /><br /> 
+    <input type="button" value="Back" onclick="window.history.back()" />
+
+</form>
+</div>
+{% endblock %}
+
+
